@@ -1,0 +1,77 @@
+.columnsManager{
+    height: 400px;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    // border: 1px solid #ecb;
+
+    position: relative;
+    > .descr{
+      position: absolute;
+      top: -5px;
+      right: 0px;
+    }
+    > .toolbar{
+      height: 25px;
+      line-height: 25px;
+      background: #ecb;
+    }
+    > .area{
+      flex-grow: 1;
+      max-height: calc(100% - 25px);
+      display: flex;
+      > ul.columnsArea{
+        flex-grow: 1;
+        min-width: 140px;
+        max-height: 100%;
+        overflow: auto;
+        li{
+          padding: 0px 5px;
+          height: 25px;
+          line-height: 25px;    
+          cursor: pointer;
+          .icon{
+            margin-right: 5px;
+            font-size: 1.1em;
+          }
+          span{
+            cursor: pointer;
+          }
+          > .fa-pencil,> .fa-close{
+            padding: 3px 5px;
+            // margin: 0px 3px;
+            &:hover{
+              border-radius: 3px;
+              background: #432;
+              color: #fff;
+            }
+          }
+        }  
+        li.hide{
+          color: #888;
+        }
+        li.unenabled{
+            text-decoration: line-through;
+        }
+        li:nth-child(even) {
+          background: #fee;
+        }
+        li[fixed=l]{
+          // background: #efefef;
+          background: #ffedea; 
+          border-bottom: 1px solid #cba;
+        }
+        li[fixed=r]{
+          // background: #efefef;
+          background: #ffedea; 
+          border-top: 1px solid #bbb;
+        }
+      }
+      > .createArea{
+        height: 100%;
+        width: 450px;
+        padding: 5px;
+        border-left: 1px solid #ecb;
+      }
+    }
+}

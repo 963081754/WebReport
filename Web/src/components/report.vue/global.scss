@@ -1,0 +1,42 @@
+.floatHint{
+    display: inline-block;
+    pointer-events: none;
+    position: fixed;
+    z-index: 100000;
+    padding: 5px;
+    background: #fefeee;
+    box-shadow: 0 0 6px 0 #bbb;
+    margin: -100px auto auto -110px;
+    white-space: nowrap;
+    border-radius: 2px;
+    border: 1px solid #999;
+    &::after,&::before{
+      content: " ";
+      z-index: 2;
+      position: absolute;
+      bottom: -14px;
+      left: 103px;
+      border-width: 7px;
+      border-style: solid;
+      border-color: #eff transparent transparent transparent;
+    }
+    &::after{
+      z-index: 1;
+      bottom: -16px;
+      left: 102px;
+      border-width: 8px;
+      border-color: #999 transparent transparent transparent;
+    }
+    > .fa{
+      padding: 3px 4px;
+      background: #432;
+      border-radius: 3px;
+      color: #fff;
+    }
+}
+
+.childDisplayer{
+  button.print{
+    display: none;
+  }
+}

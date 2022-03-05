@@ -1,0 +1,29 @@
+{
+  "name": "webreport",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cookie-session": "^1.4.0",
+    "custompackages": "file:custompackages",
+    "express": "^4.17.1",
+    "msnodesqlv8": "^2.1.0",
+    "mssql": "^6.2.3",
+    "node-rsa": "^1.1.1",
+    "node-xlsx": "^0.16.1",
+    "sequelize": "^6.3.5",
+    "sqlite3": "^5.0.0",
+    "tedious": "^9.2.1",
+    "vm2": "^3.9.2"
+  },
+  "devDependencies": {
+    "bytenode": "^1.2.2",
+    "javascript-obfuscator": "^2.12.0"
+  }
+}

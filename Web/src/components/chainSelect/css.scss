@@ -1,0 +1,31 @@
+.combobox{
+    .header,
+    .item{
+        // width: calc(100% - 10px);
+        padding-right: 10px;
+        display: flex;
+        text-align: left;
+        > label{
+            padding: 0px 3px;
+            width: 100px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            // &:not(:nth-child(1)){
+            //     width: 100px;
+            //     text-overflow: ellipsis;
+            //     white-space: nowrap;
+            //     overflow: hidden;
+            // }
+            // &:nth-child(1){
+            //     width: 100px;
+            //     // text-overflow: ellipsis;
+            //     // white-space: nowrap;  
+            //     // overflow:visible !important;
+            // }
+        }
+    }
+    .header{
+        background: #ffedea;
+    }
+}

@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en" class="js-focus-visible" data-js-focus-visible="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="icon" href="/favicon.ico">
+		<title>
+			通用WEB表格报表系统-分享、试用，框架学习、组件下载
+        </title>
+        <meta name="Keywords" content="报表,通用报表,做报表,报表系统,web报表,WEB报表"/>
+        <meta name="Description" content="通用WEB报表系统,适合ERP/EMS/进销存/CRM等数据系统的报表设计显示,可提供给员工/客户/供应商等用户使用,设计灵活易用,功能强大,大数据加载无压力,可与其它系统对接/嵌套,完美解决ERP/EMS/CRM/进销存的报表复杂/多/难问题,一套搞定所有表格报表！联系电话：17701142185" />
+        <meta NAME="author" CONTENT="电话:17701142185 微信:ls892465856">
+        <meta NAME="copyright" content="Copyright 2021-2023 开发者 版权所有 热线:17701142185 微信:ls892465856 粤ICP备2021091428号">
+
+        <link rel="stylesheet" href="/default/font-awesome-4.7.0/css/font-awesome.min.css">
+        <style>
+            *::-webkit-scrollbar {/*滚动条整体样式*/
+                width: 12px;     /*高宽分别对应横竖滚动条的尺寸*/
+                height: 12px;
+            }
+            *::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+            /* // -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2); */
+                border-radius: 2px;
+                background: #543;
+            }
+            *::-webkit-scrollbar-thumb:hover{
+                background: #765;
+            }
+            *::-webkit-scrollbar-track {/*滚动条里面轨道*/
+                /* // -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2); */
+                /* border-radius: 2px; */
+                background: none;
+            } /* 谷歌等 */
+
+            *{
+                /* //三角箭头的颜色/  */
+                scrollbar-arrow-color: #fed; 
+                /* //立体滚动条的颜色（包括箭头部分的背景色）/  */
+                scrollbar-face-color: #dcb; 
+                /* //@debug立体滚动条亮边的颜色/  */
+                scrollbar-3dlight-color: #fff; 
+                /* //滚动条的高亮颜色（左阴影？）/ */
+                scrollbar-highlight-color: #fff;  
+                /* //立体滚动条阴影的颜色/  */
+                scrollbar-shadow-color: #fff; 
+                /* //立体滚动条外阴影的颜色/  */
+                scrollbar-darkshadow-color: #fff; 
+                /* //立体滚动条背景颜色/  */
+                scrollbar-track-color: #fff;
+                /* //滚动条的基色/ */
+                scrollbar-base-color:#fff; 
+            } 
+            /* // IE */
+            *{
+                /* // scrollbar-width: thin; // 太小，不好拉 */
+                scrollbar-color: #dcb transparent;
+                scrollbar-track-color: transparent;
+                -ms-scrollbar-track-color: transparent;
+            } 
+            /* // 火狐 */
+        </style>
+        <style>
+            *{
+                padding: 0px; 
+                margin: 0px;
+                box-sizing: border-box;
+                background:none;
+                font-size: 13px;
+                /* letter-spacing: .1em; */
+                /* word-spacing: 1em; */
+            }
+            html,body{
+                background: #231;
+                color: #fed;
+                height: 100%;
+                overflow: hidden;
+
+                font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale
+            }         
+            .body{
+                display: flex;
+                height: calc(100% - 30px);
+            }
+            .copyright{
+                width: 100%;                
+                height: 30px;
+                line-height: 30px;
+                text-align: center;
+                background: #342;
+                /* border-top: 1px solid #453; */
+                color: #fed;
+                font-size: 12px;
+            }
+            .copyright a{
+                color: inherit;
+                text-decoration: none;
+            }
+            .copyright a:hover{
+                color: #99f;
+            }
+            .menu{
+                flex-shrink:0;
+                max-height: 100%;
+                max-width: 300px;
+                padding: 10px 20px 10px 10px !important;
+                overflow: auto;
+
+                /* list-style-type: cjk-ideographic; */
+                list-style-type: none !important;
+            }
+            .menu ul.courses li{
+                display: none; 
+            }
+            .menu ul.courses li:nth-child(1),.menu ul.courses li:nth-child(2){
+                display: list-item;
+            }
+            .menu ul{
+                list-style-type: decimal;                
+            }
+            .menu,.menu ul{
+                padding-left: 1.5em;
+                list-style-position: inside;
+            }
+            /* .menu li, */
+            .menu li *{
+                cursor: pointer;
+            }
+            /* .menu ul ul{
+                list-style-type: none;
+                list-style-type: lower-alpha;
+                list-style-type:  disc;
+            } */
+            .menu a{
+                display: inline-block;
+                height: 22px;
+                line-height: 22px;
+                /* text-overflow: ellipsis;
+                white-space: nowrap; 
+                overflow: hidden; */
+                color: #fed;
+                text-decoration-line: none;
+            } 
+            .menu span + a{
+                margin-left: 3px;
+            }
+            .menu span > i.fa{
+                vertical-align: baseline;
+                font-size: 1.2em;
+                width: 12px;
+                height: 12px;
+            }
+            .menu span > i.fa:nth-child(1),.menu span > i.fa:nth-child(2){
+                font-size: 1.5em;
+            }
+            .menu > li:not(.yes) > span > i.fa.close,
+            .menu > li.yes span > i.fa.open{
+                display: none;
+            }
+            .menu li.yes > ul{
+                display: none;
+            }
+            .menu li.yes > ul li a{
+                /* display: none; */
+                height: 0px;
+                line-height: 0px;
+                overflow: hidden;
+            }
+            .menu li.yes > i.opend{
+                display: none;
+            }
+            .menu li:not(.yes) > i.closed{
+                display: none;
+            }
+            .content{
+                flex-grow: 1;
+                height: 100%;
+                padding: 10px 10px 30px 10px;
+                overflow: auto;
+                line-height: 1.8em;
+                color: #fed;
+                /* background: #221; */
+            }
+            .content ul{
+                padding-left: 4em;
+                list-style-type: decimal;
+                list-style-position:outside;
+            }
+            .content h2:first-child{
+                border-top: none;
+            }
+            .content a{
+                color: #99f;
+                text-underline-offset: 2px;
+            }
+            .content img,.content video{
+                max-width: 100%;
+                border: none;
+                outline: none;
+            }
+            .content img:not([src]){
+                min-height: 50px;
+                min-width: 50px;
+                /* border: none;
+                border: 1px dotted #654; */
+            }
+            .content h2,.content h3{
+                /* font-weight: normal; */
+                font-size: 1.1em;
+                letter-spacing: .1em;
+                line-height: 2em;
+                border-top: 1px solid #654;
+            }
+            .content h2{
+                font-size: 1.2em;
+                line-height: 3em;
+            }
+            .content textarea{
+                width: 100%;
+                background: #231;
+                color: #fff;
+                font-size: 1.5em;
+                overflow: auto;
+                white-space: nowrap;
+                outline: none;
+                border-radius: 2px;
+                border: none;
+                /* border: 1px solid #765; */
+                padding: 10px;
+            }
+            .content #contact,.content #guestbook,.content #submit{
+                border-radius: 2px;
+                border: 1px solid #876;
+                outline: none;
+                color: #fed;
+                padding: 5px;
+                margin: 5px 0px;
+            }
+            .content #submit{
+                padding: 5px 15px;
+                cursor: pointer;
+            }
+        </style>  
+	</head>
+    <body>
+        <div class="body">
+            <ul id="menu" class="menu">
+                <li>
+                    <a href="#a1">系统试用</a>
+                </li>
+                <li class="yes">
+                    <span>
+                        <i class="fa fa-caret-right close"></i>
+                        <i class="fa fa-caret-down open"></i>
+                        <i class="fa fa-folder-o close"></i>
+                        <i class="fa fa-folder-open-o open"></i>
+                    </span>
+                    <a href="#a2">使用教程</a>
+                    <ul class="courses">
+                        <li><a href="#a21">开始使用基本流程</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">更多使用视频</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">一个完整的报表设计示例：采购明细</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">配置：自定义 前台类型（如：员工、客户等）</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">配置：基于已有角色、用户的轻松对接</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">配置：多数据库链接</a></li>  
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">配置：后台模拟【登录用户】</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">报表复用：一句SQL，多报表共享</a></li>  
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">报表链接：打开子报表（如：弹出 明细）</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">URL 链接：传参打开外部URL</a></li>  
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">报表权限：角色分配</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">报表权限：登录用户约束 方式一（如：我的采购单）</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">报表权限：登录用户约束 方式二（如：我的采购单）</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">表格设计：重命名、排序、拖拽、列宽、对齐、格式化、【别针】绑定、两边固定、显示隐藏、合计等</a></li> 
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">表格设计：用【别针】绑定 列和条件，优化SQL JOIN</a></li> 
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">表格设计：JS自定义复杂计算列</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">表格设计：状态列的颜色标记</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">查询设计：查询栏设计</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">查询设计：条件的默认值、必填</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">查询设计：绑定级联下拉条件</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">查询设计：创建组合条件一</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">查询设计：创建组合条件二</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">查询设计：高级查询，复杂灵活</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">其它：打印、下载</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">其它：单报表浏览器窗口，方便系统嵌套</a></li>  
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">其它：精简全屏，页面更宽敞</a></li>
+                        <li><a href="http://www.zuobaobiao.cn/admin" target="_blank">其它：多报表浏览，一点都不卡</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <span>
+                        <i class="fa fa-caret-right close"></i>
+                        <i class="fa fa-caret-down open"></i>
+                        <i class="fa fa-folder-o close"></i>
+                        <i class="fa fa-folder-open-o open"></i>
+                    </span>
+                    <a href="#a3">系统设计</a>
+                    <ul>
+                        <li><a href="#a31">框架基础（第三方引用）</a></li>
+                        <li><a href="#a3_1">用户、角色接口</a></li>
+                        <li><a href="#a3_2">系统整合</a></li>
+                        <li><a href="#a32">前端路由</a></li>
+                        <li><a href="#a33">前端架构：3层</a></li>
+                        <li><a href="#a34">层之间按需引用</a></li>
+                        <li><a href="#a35">UI布局框架</a></li>
+                        <li><a href="#a36">大数据分页优化</a></li>
+                        <li><a href="#a37">报表链接：2类</a></li>                    
+                        <li><a href="#a38">查询条件设计：6类</a>
+                            <ul>
+                                <li><a href="#a381">基础：3类</a></li>
+                                <!-- <li><a href="#a1">输入方式切换</a></li> -->
+                                <li><a href="#a382">组合：2类</a></li>
+                                <li><a href="#a383">别针绑定：下拉/级联/弹窗</a></li>
+                                <li><a href="#a384">登录用户约束：2类</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#a39">SQL参数来源：以上条件</a></li>
+                        <li><a href="#a310">状态列 颜色标记</a></li>
+                        <li><a href="#a311">JS自定义列的编写与计算</a></li>                   
+                        <li><a href="#a312">权限机制</a>
+                            <ul>
+                                <li><a href="#a3121">报表角色分配</a></li>
+                                <li><a href="#a3122">报表复制与权限重置</a></li>
+                                <li><a href="#a3123">子报表 角色自动匹配</a></li>
+                                <li><a href="#a3124">登录用户约束：2类</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#a313">单报表独立浏览器窗口</a></li>
+                        <li><a href="#a314">后台“登录用户”模拟</a></li>
+                    </ul>
+                </li>
+                <li class="yes">
+                    <span>
+                        <i class="fa fa-caret-right close"></i>
+                        <i class="fa fa-caret-down open"></i>
+                        <i class="fa fa-folder-o close"></i>
+                        <i class="fa fa-folder-open-o open"></i>
+                    </span>
+                    <a href="#a4">component下载</a>
+                    <ul>
+                        <li><a href="#a41">多列select</a></li>
+                        <li><a href="#a42">提交时等待button</a></li>
+                        <li><a href="#a43">颜色选择器colorPicker</a></li>
+                        <li><a href="#a44">日期输入框datePicker</a></li>
+                        <li><a href="#a45">消息提示message</a></li>
+                        <li><a href="#a46">多样式bool值输入toggle</a></li>
+                        <li><a href="#a47">可拖拉树tree</a></li>
+                        <li><a href="#a48">迷尔弹窗minipopup</a></li>
+                        <li><a href="#a49">仿window弹窗popup</a></li>
+                        <li><a href="#a410">纯css仿title提示hint</a></li>
+                    </ul>
+                </li>
+                <li class="yes">
+                    <span>
+                        <i class="fa fa-caret-right close"></i>
+                        <i class="fa fa-caret-down open"></i>
+                        <i class="fa fa-folder-o close"></i>
+                        <i class="fa fa-folder-open-o open"></i>
+                    </span>
+                    <a href="#a5">directive下载</a>
+                    <ul>
+                        <li><a href="#a51">加载完成时v-onInserted</a></li>
+                        <li><a href="#a52">仿hover延迟消失<br/>v-delayHover</a></li>
+                        <li><a href="#a53">移动v-move</a></li>
+                        <li><a href="#a54">改变宽高v-resize</a></li>
+                        <li><a href="#a55">宽高改变时v-onresize</a></li>
+                        <li><a href="#a56">拖拉排序v-sort</a></li>
+                        <!-- <li><a href="#a1">表格滚动v-table</a></li> -->
+                    </ul>
+                </li>
+                <li>
+                    <a href="#a6">交流反馈</a>
+                </li>
+                <!-- <li>
+                    <span>文章收集</span>
+                </li> -->
+            </ul>
+
+            <div class="content">
+                <h2 id="a1">在线试用</h2>            
+                在线地址：<a href="http://www.zuobaobiao.cn/admin" target="_blank">http://www.zuobaobiao.cn/admin</a><br/>
+                前台是在后台设置的，看下图<br/>
+                <img src2="/default/image/url1.jpg" alt="这里打开前台"><br/>
+                <img src2="/default/image/url2.jpg" alt="前台账号密码再这里">
+                <h2 id="a2">使用教程</h2>
+                <h3 id="a21">开始使用基本流程</h3>
+                <ul>
+                    <li>打开【基本设置】窗口，设置前台类型与用户登录接口以及其它需要用到的接口</li>
+                    <li>打开【数据库管理】窗口，添加数据库；建议只给数据库连接账号 只读权限。单击 <i class="fa fa-etsy"></i> 图标 翻译报表SQL使用到的字段名为中文，方便报表设计。</li>
+                    <li>打开【创建报表】窗口，开始编写SQL、创建报表。</li>
+                    <li>创建报表的过程中，如果需要给某列绑定值，打开【别针管理】窗口创建 别针。</li>
+                </ul>
+                <h3 id="a22">更多使用视频</h3>
+                更多使用视频 <a href="http://www.zuobaobiao.cn/admin" target="_blank">http://www.zuobaobiao.cn/admin</a><br/>
+                <h2 id="a3">系统设计</h2>
+                <h3 id="a31">框架基础（第三方引用）</h3>
+                后端：nodejs + express。nodejs部署简单，轻便易用<br/>
+                前端：Vue2.0 + Vuex + Vue router + axios；没有第三方UI库，按需自写。
+                <h3 id="a3_1">用户、角色接口</h3>
+                报表系统 不提供角色、用户，使用接口调用已有的角色、用户，如下图：<br/>
+                <img src2="/default/image/dj1.jpg" alt="对接已有的角色、用户">  
+                <h3 id="a3_2">系统整合</h3>
+                <ul>
+                    <li>
+                        用户登录时，同时发送登录请求给当前系统与报表系统。
+                    </li>
+                    <li>
+                        用iframe嵌套报表系统的<a href="#a313">“单报表独立浏览器窗口”</a>到当前系统需要显示报表的位置。
+                    </li>
+                </ul>
+                <h3 id="a32">前端路由机制</h3>
+                后台：使用hash模式，2个路由：<br/>
+                <ul>
+                    <li>/admin#xxx（数字，前台类型ID） 后台管理。</li>
+                    <li>/admin#xxx/login  后台登陆。</li>
+                </ul>
+                前台：为美观易记，使用history模式，后端配合；路由有4个（假设在后台设置的前台类型编号为 staff，customer，supplier等）：<br/>
+                <ul>
+                    <li>/staff 员工前台（所有报表）。</li>
+                    <li>/staff/login 员工前台登录。</li>
+                    <li>/staff/xxx（数字，报表ID） 员工前台一个报表(id=xxx)单独浏览器窗口。</li>
+                    <li>/staff/xxx/login 员工前台一个报表(id=xxx)单独浏览器窗口 的登录。</li>
+                </ul>
+                <h3 id="a33">前端架构：3层</h3>
+                <ul>
+                    <li>API数据源，数据层，与后端数据交互（使用axios）。</li>
+                    <li>Store，全局缓存层，使用Vuex、localStorage、sessionStorage；引用并封装API层接口，对某些数据进行store.state缓存或其它方式的缓存；隐藏store对象，只公开store.getters与其它写接口，屏蔽 视图层对数据源的关注。</li>
+                    <li>视图层，VUE组件、页面，引用Store层的getters（只读）或 其它 写接口（提交数据）。</li>
+                </ul>
+                <h3 id="a34">层之间按需引用</h3>
+                以上所述，视图层 并非直接通过vuex的store与缓存层交互，不是从根VUE组件传递store对象。如下是与数据交互的常用做法：
+                <ul>
+                    <li>根VUE组件 绑定全局Store（不用）</li>
+                    <li>根VUE组件的Provide引用 缓存层，包含所有需要的数据读写接口以及store的getters，getters是只读公共数据。（使用）</li>
+                    <li>子孙组件、页面通过Inject，引用需要的接口与getters，使用什么引用什么。（使用）</li>
+                </ul>
+                <h3 id="a35">UI布局框架</h3>
+                <ul>
+                    <li>左边 菜单</li>
+                    <li>底下 任务栏</li>
+                    <li>全页面 都是 弹窗区域；一个弹窗一个报表，仿window多窗口模式，方便宽敞、多报表对照浏览，自由拖拉缩放、移动、最大、最小、隐藏。</li>
+                </ul>
+                <h3 id="a36">大数据分页优化</h3>
+                <ul>
+                    <li>分页SQL使用row_number开窗函数；参数化查询，拒绝SQL注入。</li>
+                    <li>列表数据与总条数、绑定数据 3者分开查询，但同时请求，不让总数的查询拖慢列表数据的返回，并尽可能减少网络来回时间。</li>
+                    <li>总条数 根据条件缓存，一组条件总数只查一次。</li>
+                    <li>返回的列表数据使用Object.freeze冻结，避免Vue做不必要的监听，节省内存。</li>
+                    <li>不使用浏览器的原生滚动，多报表多窗口浏览时，拖动弹窗会很卡，因为浏览器的 <a href="https://www.iefans.net/liulanqi-ruhe-gongzuo-yuanli/" target="_blank" title="浏览器是如何工作的？（工作原理）">渲染树</a> 很庞大；<br/>
+                        自写滚动条，仿“滚动列表”，实际不是滚动，而是使用display:none隐藏不在可见区域的数据项，减少浏览器 <a href="https://www.iefans.net/liulanqi-ruhe-gongzuo-yuanli/" target="_blank" title="浏览器是如何工作的？（工作原理）">渲染树</a> 的大小，提高渲染速度；无论加载的数据是100条，还是5000条，体验是一样一样的，不卡。
+                    </li>
+                </ul>
+                <h3 id="a37">报表链接：2类</h3>
+                <ul>
+                    <li>打开子报表（子弹窗）：从报表打开报表，如 明细；可无限层级打开</li>
+                    <li>打开站外URL，用{标签}传参；{标签}代表对应列的数据</li>
+                </ul>
+                <h3 id="a38">条件设计：6类</h3>
+                <ul>
+                    <li id="a381">
+                        <h3>基础条件：3类</h3>
+                        <h4>字符串：</h4>
+                        模糊匹配<br/>
+                        <img src2="/default/image/s1.jpg" alt="模糊匹配"><br/>
+                        范围匹配<br/>
+                        <img src2="/default/image/s3.jpg" alt="范围匹配"><br/>
+                        多种方式匹配<br/>
+                        <img src2="/default/image/s2.jpg" alt="多种方式匹配"><br/>
+                        <h4>数字：</h4>
+                        等值比较<br/>
+                        <img src2="/default/image/n1.jpg" alt="等值比较"><br/>
+                        字段与字段比较（大于小于等于）<br/>
+                        <img src2="/default/image/n2.jpg" alt="字段与字段比较（大于小于等于）"><br/>
+                        范围比较<br/>
+                        <img src2="/default/image/n3.jpg" alt="范围比较"><br/>
+                        <h4>日期：</h4>
+                        等值比较<br/>
+                        <img src2="/default/image/d1.jpg" alt="等值比较"><br/>
+                        字段与字段比较（大于小于等于）<br/>
+                        <img src2="/default/image/d2.jpg" alt="字段与字段比较（大于小于等于）"><br/>
+                        范围比较<br/>
+                        <img src2="/default/image/d3.jpg" alt="范围比较"><br/>
+                    </li>
+                    <li id="a382">
+                        <h3>组合条件：2类</h3>
+                        <h4>同数据类型组合，条件重命名组成一个下拉</h4>
+                        <img src2="/default/image/g1.jpg" alt="同数据类型组合，条件重命名组成一个下拉"><br/>
+                        <img src2="/default/image/g11.jpg" alt="同数据类型组合，条件重命名组成一个下拉"><br/>
+                        <img src2="/default/image/g12.jpg" alt="同数据类型组合，条件重命名组成一个下拉"><br/>
+                        <h4>不同数据类型组合，设定的值组成一个下拉</h4>
+                        <img src2="/default/image/g21.jpg" alt="不同数据类型组合，设定的值组成一个下拉"><br/>
+                        <img src2="/default/image/g22.jpg" alt="不同数据类型组合，设定的值组成一个下拉"><br/>
+                    </li>
+                    <li id="a383">
+                        <h3>别针绑定：下拉/级联/弹窗</h3>
+                        使用步骤：                    
+                        <ul>
+                            <li>
+                                在【别针管理】页面创建 别针。2种数据来源：枚举(常量)，数据库(编写SQL)。
+                            </li>
+                            <li>
+                                绑定 报表的列，每行该列的 值==“别针”某项的 编号，然后该列才能显示 “别针”对应项的 名称。
+                            </li>
+                            <li>
+                                把绑定“别针”的列作为查询条件时，条件的输入方式显示为以下3种方式之一：
+                                <ul>
+                                    <li>
+                                        简单下拉：当“别针”类型为 枚举；或 数据库，但 数据量 小于等于 50条时。
+                                    </li>
+                                    <li>级联下拉：“别针”为 数据库 类型，且 设置了【父编号】。</li>
+                                    <li>弹窗分页：“别针”为 数据库 类型，数据量 大于 50，用分页列表的形式。</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        以下示例截图<br/>
+                        <img src2="/default/image/k1.jpg" alt="来源：枚举"><br/>                    
+                        <img src2="/default/image/k7.jpg" alt="来源：枚举"> <img src2="/default/image/k3.jpg" alt="来源：枚举"><br/>
+                        <img src2="/default/image/k2.jpg" alt="来源：枚举"><br/>
+                        <img src2="/default/image/k4.jpg" alt="来源：枚举"> <img src2="/default/image/k5.jpg" alt="来源：枚举"><br/>
+                        <img src2="/default/image/k8.jpg" alt="来源：枚举"><br/>
+                        <img src2="/default/image/k6.jpg" alt="来源：枚举"><br/>
+
+                        <h4>条件输入方式的切换</h4>
+                        <img src2="/default/image/h1.jpg" alt="条件输入方式的切换"><br/>
+                        <img src2="/default/image/h2.jpg" alt="条件输入方式的切换"><br/>
+                        <img src2="/default/image/h3.jpg" alt="条件输入方式的切换"><br/>
+                    </li>
+                    <li id="a384">
+                        <h3>登录用户约束：2类</h3>
+                        <h4>动态绑定 登录用户的属性值</h4>
+                        <img src2="/default/image/u1.jpg" alt="动态绑定 登录用户的属性值"><br/>
+                        <h4>SQL语句绑定 登录用户的属性值</h4>
+                        <img src2="/default/image/u2.jpg" alt="SQL语句绑定 登录用户的属性值"><br/>
+                    </li>
+                </ul>
+                <h3 id="a39">SQL参数来源：以上条件</h3>
+                SQL参数 来自以上6类条件，全部使用 <a href="https://www.cnblogs.com/xiaozi/p/5471283.html" target="_blank">参数化查询</a>，杜绝SQL注入！
+                <h3 id="a310">状态列 颜色标记</h3>
+                有的列，比如 状态，需要用不同的颜色进行区分，可用【别针管理】页面的 <i class="fa fa-gear"></i> 按钮来设置<br/>  
+                <img src2="/default/image/sign1.jpg" alt="状态列 颜色标记">          
+                <h3 id="a311">JS自定义列的编写与计算</h3>
+                如果需要 复杂计算的结果值，可使用JS编写自定义列，引用行的全部数据(参数：row)进行计算；<br/>
+                该函数在沙箱中运行，不会破坏页面dom；<br/>
+                可以返回任意数据，包括HTML字符串，HTML字符串会作为dom显示。<br/>
+                <img src2="/default/image/c1.jpg" alt="JS自定义列的编写与计算">
+                <h3 id="a312">权限机制</h3>
+                <ul>
+                    <li id="a3121">
+                        <h4>报表角色分配</h4>
+                        本系统不创建 角色与用户，通过接口使用已有的 角色与用户；便于与原系统对接。<br/>
+                        <img src2="/default/image/q2.jpg" alt="报表角色分配"><br/>
+                        <img src2="/default/image/q1.jpg" alt="报表角色分配"><br/>
+                    </li>
+                    <li id="a3122">
+                        <h4>报表复制与权限重置</h4>
+                        复制报表 与 源报表 共享SQL；复制报表 不能修改SQL，但可以 重设权限、列、条件等等；复制报表 数量不限。
+                        <img src2="/default/image/q3.jpg" alt="报表复制与权限重置"><br/>
+                        <img src2="/default/image/q4.jpg" alt="报表复制与权限重置"><br/>
+                        <img src2="/default/image/q5.jpg" alt="报表复制与权限重置"><br/>
+                    </li>
+                    <li id="a3123">
+                        <h4>子报表 角色自动匹配</h4>
+                        如果设置了 报表链接。当用户点击 链接时，打开的 子报表 不一定是 设置时绑定的那个——如果用户没有那个报表的角色权限——系统会根据用户的角色，选择他/她有角色权限的、与绑定报表共享SQL的报表 打开；如果找不到，则提示“没有权限”。
+                        <img src2="/default/image/q6.jpg" alt="子报表 角色自动匹配"><br/>
+                    </li>
+                    <li id="a3124">
+                        <h4>登录用户约束：2类</h4>
+                        除了角色约束，还可以做到具体的 登陆用户约束。<br/>
+                        角色约束：约束某个报表能不能被用户打开。<br/>
+                        用户约束：限制用户查看该报表的数据范围。其实就是 强制添加SQL查询条件——用登陆用户的属性值；有2种添加方式：<br/>
+                        <ul>
+                            <li>
+                                静态添加：将登陆用户的属性 作为@参数，编写到SQL语句中。优点：可添加@参数到SQL语句的任意正确位置；缺点：复制报表 无法改变。<br/>
+                                <img src2="/default/image/q8.jpg" alt="静态添加 登陆用户约束"><br/>
+                            </li>
+                            <li>
+                                动态添加：不编写到SQL语句，保存设置到配置。优点：复制报表 可以 重设；缺点：条件只能添加到 外层select语句的where后面。<br/>
+                                <img src2="/default/image/q7.jpg" alt="动态添加 登陆用户约束"><br/>
+                            </li>
+                        </ul>                    
+                    </li>
+                </ul>
+                <h3 id="a313">单报表独立浏览器窗口</h3>
+                单个报表在单独浏览器窗口打开。之所以开发 单报表浏览器窗口，1、是因为方便大屏查看；2、如果要把报表嵌套到其它系统，提供 单窗口报表 方便使用iframe嵌套，只需要一个报表ID的URL即可（当然，如果未登录，会弹出 登录小窗口；登录后 立即加载报表数据），如 http://www.zuobaobiao.cn/staff/64（编号为64的员工报表；staff为自定义的前台类型：员工）。
+                <h3 id="a314">后台“登录用户”模拟</h3>
+                为了在报表设计的时候实时看到【登录用户约束】的效果，需要额外提供“模拟用户接口”给后台使用，用来获取用户Object，作为“登录用户约束”与 @user_xxx参数 的值。该接口 非必需。如果不提供则后台不能使用【登录用户约束】功能和@user_xxx参数，也则无法设计 根据登录用户来限制查询数据的报表。<br/>
+                <img src2="/default/image/j1.jpg" alt="后台“登录用户”模拟"><br/>
+                <img src2="/default/image/j2.jpg" alt="后台“登录用户”模拟"><br/>
+                <img src2="/default/image/j3.jpg" alt="后台“登录用户”模拟">
+                
+                <h2 id="a4">component下载</h2>
+                <h3 id="a41">多列select</h3>
+                可以显示多个列的select。默认显示一列，类似浏览器原生select的样子；多列显示需自定义 项的显示形式。头部 非必需，需自定义，当出现滚动条时，不随滚动条滚动。头部的固定是使用position: sticky实现。sticky非CSS标准，但各大浏览器都支持，IE不支持。<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                使用：<br/>
+                <img src2="/default/image/combobox1.jpg" alt="多列select"><br/>
+                效果：<br/>
+                <img src2="/default/image/combobox2.jpg" alt="多列select">
+                <h3 id="a42">提交时等待button</h3>
+                目的：防止用户多次点击重复发送请求，并且显示等待图标，提高用户体验。代码很少，<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                <img src2="/default/image/unagainButton.jpg" alt="提交时等待button"><br/>
+                <img src2="/default/image/unagainButton5.jpg" alt="提交时等待button"><br/>
+                使用：<br/>
+                <img src2="/default/image/unagainButton2.jpg" alt="提交时等待button"><br/>
+                <img src2="/default/image/unagainButton3.jpg" alt="提交时等待button"><br/>
+                效果：<br/>
+                <img src2="/default/image/unagainButton.gif" alt="提交时等待button">
+                <h3 id="a43">颜色选择器colorPicker</h3>
+                参考了别人的颜色转换算法，改成自己需要的样子，不作介绍，<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                效果：<br/>
+                <img src2="/default/image/color.jpg" alt="消息提示message">
+
+                <h3 id="a44">日期输入框datePicker</h3>
+                只做了日期的选择，没有时分秒的选择，仿 火狐 的日期选择器的样式。<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                假设注册为r-date-picker，使用以下：<br/>
+                <img src2="/default/image/datepicker.jpg" alt="日期输入框datePicker"><br/>
+                效果：<br/>
+                <img src2="/default/image/datepicker2.jpg" alt="日期输入框datePicker">
+                <h3 id="a45">消息提示message</h3>
+                不是Vue component，纯JS Class函数（message），提供类似window的小弹窗提示。error、success、info、confirm、prompt。<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                使用：<br/>
+                <ul>
+                    <li>
+                        添加到Vue.prototye：Vue.prototype.$message = new message()。<br/>
+                        可用方法：error(txt,time)，success(txt,time)，info(txt,time)，confirm(txt)，prompt(txt,defaultValue,required)。<br/>
+                        time：延迟多少毫秒自动关闭，默认3000ms；-1，则不自动关闭，等待用户手动关闭。<br/>
+                        defaultValue：默认值。<br/>
+                        required：是否必填。
+                    </li>
+                    <li>                    
+                        Vue组件里调用。this.$message.error('名称不能为空！') 或 this.$message.error('名称不能为空！',5000) 或 this.$message.error('名称不能为空！',-1)。
+                    </li>
+                </ul>
+                效果：<br/>
+                <img src2="/default/image/message.gif" alt="消息提示message">
+
+                <h3 id="a46">多样式bool值输入toggle</h3>
+                使用fontawesome的字体图标，把多种图标合并到一个组件中，根据参数来选择其中一个显示。一个组件搞定多种显示方式。<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                <img src2="/default/image/toggle.jpg" alt="多样式bool值输入toggle"><br/>
+                假设注册为r-toggle，使用以下：<br/>
+                <img src2="/default/image/toggle2.jpg" alt="多样式bool值输入toggle"><br/>
+                效果：<br/>
+                <img src2="/default/image/toggle3.jpg" alt="多样式bool值输入toggle">
+
+                <h3 id="a47">可拖拉树tree</h3>
+                可控制每一项(包括 根)的拖拉（禁止|启用）与接收或接收指定“sign”的项；可以设置每一项的 图标、展开/折叠 图标。<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                以下是项（TreeItem）的属性：<br/>
+                <ul>
+                    <li>id:string，唯一键</li>
+                    <li>pid:string，父ID</li>
+                    <li>name:string，名称</li>
+                    <li>icon:string，图标</li>
+                    <li>icon_open: string，如果有子级，子级展开时的图标</li>
+                    <li>folded: bool，折叠/展开 子级</li>
+                    <li>moveable: bool，是否可拖拉移动</li>
+                    <li>acceptable: bool，是否能接收移过来的项。</li>
+                    <li>acceptSigns: array | null，可接纳的"标记"列表，acceptable=true时可用，acceptSigns为null则接收所有。</li>
+                    <li>sign: string，"标记"   </li>
+                    <li>children: array，子级</li>
+                    <li>model: object | null | undefined，用户数据承载用；tree组件内部 不需要。</li>
+                    <li>seq: number，序号</li>
+                </ul>
+                tree的props：<br/>
+                <ul>
+                    <li>list：Array，TreeItem数组，树的项列表。</li>
+                    <li>hand：String，html选择器(selector)；项的可移动的手柄，默认是整个。</li>
+                    <li>rootOptions：Objec（属性：acceptable，acceptSigns，id）；树的根项，它的属性的解释如TreeItem的同名属性。</li>
+                </ul>
+                排序结束后事件：sorted，参数(item)；item：移动后的项。<br/>
+                假设注册为r-tree，使用类似以下：<br/>
+                <textarea rows="6">
+    <r-tree :list="items" :rootOptions="{id:0,acceptable:true,acceptSigns:['xxx']}" @sorted="func">
+        <template v-slot:default="{item}">
+            <!-- …………自定义HTML -->
+        </template>
+    </r-tree>
+                </textarea>
+                效果：<br/>
+                <img src2="/default/image/tree.gif" alt="可拖拉树tree">
+
+                <h3 id="a48">迷尔弹窗minipopup</h3>
+                引用到下面“directive下载”的v-move与v-resize指令。v-move使用position: fixed定位，改变top、left来移动。<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                props说明：<br/>
+                <textarea rows="34">
+    props:{
+        visible:{
+            type:Boolean,
+            required:true
+        }, // 显示/关闭
+        closeable:{
+            type:Boolean,
+            required:false,
+            default:true
+        }, // 是否可显示“关闭”按钮
+        resizeable:{
+            type:Boolean,
+            required:false,
+            default:false
+        }, // 是否可拖拉改变宽高
+        title:{
+            type:String,
+            required:false,
+            default:''
+        }, // 标题
+        message:{
+            type:String,
+            required:false
+        }, // 内容。定义内容有2种方式：1、slot；2、message
+        shade:{
+            type:Boolean,
+            required:false
+        }, // 是否遮罩
+        icon:{
+            type:String,
+            required:false
+        } // 左上角的图标
+    }
+                </textarea>
+                假设注册为r-minipopup，使用类似以下：<br/>
+                <img src2="/default/image/minipopup2.jpg" alt="迷尔弹窗minipopup"><br/>
+                效果：效果看下面的popup。
+
+                <h3 id="a49">仿window弹窗popup</h3>
+                引用到下面“directive下载”的v-move与v-resize指令。v-move使用position: fixed定位，改变top、left来移动。<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                props说明：<br/>
+                <textarea rows="55">
+    props:{
+        visible:{
+            type:Boolean,
+            required:true
+        }, // 打开/关闭
+        shade:{
+            type:Boolean,
+            required:false
+        }, // 是否遮罩
+        drag:{
+            type:Boolean,
+            required:false,
+            default:true
+        }, // 是否可拖拉移动
+        resize:{
+            type:Boolean,
+            required:false,
+            default:true
+        }, // 是否可拖拉边缘改变宽高
+        enableMax:{
+            type:Boolean,
+            required:false,
+            default:true
+        }, // 是否显示 最大化、还原 按钮
+        autoHeight:{
+            type:Boolean,
+            required:false,
+            default:false
+        }, // 高度 是否自适应
+        closeable:{
+            type:Boolean,
+            required:false
+        }, // 是否显示 关闭按钮
+        title:{
+            type:String,
+            required:false
+        }, // 标题
+        content:{
+            type:String,
+            required:false
+        }, // 内容。定义内容有2种方式：1、slot；2、message
+        fix:{
+            type:Boolean,
+            required:false
+        }, // 是否 显示 “最前”按钮
+        aloneWindow:{
+            type:Boolean,
+            required:false
+        }, // 是否 显示 独立窗口按钮
+        icon:{ 
+            type:String,
+            required:false
+        } // 左上角的图标
+    }
+                </textarea>
+                假设注册为popup，使用类似以下：<br/>
+                <img src2="/default/image/popup.jpg" alt="仿window弹窗popup">
+                效果：<br/>
+                <img src2="/default/image/popup.gif" alt="仿window弹窗popup">
+                <!-- <video controls="controls" autoplay="autoplay">
+                    <source src2="/default/image/popup.mp4" type="video/mp4" />
+                    <object data="/image/popup.mp4"></object>
+                </video> -->
+                <h3 id="a410">纯css仿title提示hint</h3>
+                :hover + :after 实现的 仿element title提示，轻便好用。
+
+                <h2 id="a5">directive下载</h2>
+                <h3 id="a51">加载完成时v-onInserted</h3>
+                有时候需要等待子组件加载完成后执行某个操作；当被子组件被插入到DOM中时，执行 自定义的回调函数。<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                <textarea rows="11">
+    import Vue from 'vue'
+    Vue.directive('onInserted', {  
+    inserted(el,{ value:{callback} }) { // 当被绑定的元素插入到 DOM 中时……
+        if(typeof(callback) === 'function'){
+            Vue.nextTick(()=>{
+                callback()
+            })
+        }
+    }
+    })
+                </textarea>
+                使用：<br/>
+                v-onInserted="{callback:自定义的处理函数}"
+
+                <h3 id="a52">仿hover延迟消失v-delayHover</h3>
+                使用css的:hover来显示/隐藏子元素，如果用户动作稍稍移出元素，子元素就会隐藏，用户很不方便，因此写这个指令，模仿:hover，实现延迟隐藏。<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                <textarea rows="29">
+    import Vue from 'vue'
+
+    Vue.directive('delayHover', {                  
+        inserted(el,{value:time}={}) { // 当被绑定的元素插入到 DOM 中时……
+        const className = 'delayHover'
+        let key
+        el.addEventListener('mouseenter',()=>{
+            clearTimeout(key) // 如果用户300ms内 再次移入，则清除settimeout，不隐藏
+            el.addClass(className) // 用到自定义的addClass函数
+        }) // 鼠标 移入是 添加class delayHover
+        el.addEventListener('mouseleave',()=>{
+            key = setTimeout(() => {
+                el.removeClass(className) // 用到自定义的removeClass函数
+            }, time || 300)
+        })  // 鼠标 移出300ms后再 移除class delayHover，这就实现了 延迟“hover”
+        }
+    })
+    // class“delayHover” 自己编写。如：
+    .xxxx{
+        > .yyy{
+            display:none;
+        }
+    }
+    .xxxx.delayHover{
+        > .yyy{
+            display: block;
+        }
+    }
+                </textarea>
+
+                <h3 id="a53">移动v-move</h3>
+                悬浮移动，常用功能，使用position:fixed定位，改变top、left来移动。组件minipopup、popup都是引用它来实现移动的。<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                使用：<br/>
+                v-move="'selector'" 或 v-move；selector是移动手柄的CSS选择器，为空则整个元素都可按下拖动。
+                <h3 id="a54">改变宽高v-resize</h3>
+                元素的position必须是absolute、relative、fixed、sticky其中一个，因为指令会用display:absolute给元素上下左右的4个边和4个角添加“手柄”元素(不可见)，并且 拖拉边缘改变宽高涉及到style的width、height、top、left的改变；如果元素position:static，则自动重置为position:relative。使用时要注意该指令对元素所做的修改，可能会影响到其它元素。组件minipopup、popup引用它来实现窗口宽高的改变。<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                使用：<br/>
+                v-resize="true"或 v-resize="false"；true启用，false禁用。
+
+                <h3 id="a55">宽高改变时v-onresize</h3>
+                HTML原生的onresize只支持body、iframe元素，所以需要写每个元素都支持的v-onresize指令。原理：给元素添加一个隐藏的iframe，设置iframe的宽高为父元素的100%，然后监听iframe的onresize事件。优点：兼容所有浏览器；缺点：需要给父元素设置position:relative，或父元素已经设置position为absolute、relative、fixed、sticky。网上有其它的实现方案，就是太复杂，这个简单的多。<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                使用：<br/>
+                v-onresize="xxx"；xxx是元素宽高改变后的会调函数。
+
+                <h3 id="a56">拖拉排序v-sort</h3>
+                使用HTML5的拖拉事件实现。支持拖拉排序、自定义排序、结束后回调、跨区域互相拖放、接受或拒绝跨域拖放、整个功能的启用/禁用。<a href="https://github.com/963081754/ul-share" target="_blank">git源码</a>。<br/>
+                使用：<br/>
+                v-sort="{disable:false,list:items, hand:'.xxx', name:'abc' , accepts:['eee','ddd'], sorter:sorterFun, callback:sortedFun}"
+                参数说明：
+                <ul>
+                    <li>disable：Boolean，可空，默认false；是否禁用。</li>
+                    <li>list：Array，必须；要绑定的项数据。</li>
+                    <li>hand：String，非必须，默认整个绑定项的整个元素；css选择器，拖拉手柄。</li>
+                    <li>name：String，非必须；命名。</li>
+                    <li>accepts：String数组，非必须；接受跨域拖放的name。</li>
+                    <li>sorter：Function(index1,index2,item)，非必须；自定义排序函数；index1:被拖拉项的原位置（如果index1=-1，则表示是从区域外拖入、当前区域未存在的项；比如添加操作）；index2:被拖拉项的新位置；item：拖拉的数据项。</li>
+                    <li>callback：Function(index1,index2,item)，非必须；排序结束后的回调函数；index1:被拖拉项的原位置（如果index1=-1，则表示是从区域外拖入、当前区域未存在的项；比如添加操作）；index2:被拖拉项的新位置（如果index2=null，则表示从当前区域拖出区域外；比如移除操作）；item：拖拉的数据项。</li>
+                </ul>
+                效果：<br/>
+                <img src2="/default/image/v-sort.gif" alt="拖拉排序v-sort">
+
+                <h3 id="a6">交流反馈</h3>
+                <input id="contact" placeholder="联系方式" >
+                <textarea id="guestbook" rows="4"></textarea>
+                <div> 
+                    <button id="submit" onclick="submit()">提交</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            Copyright 2021-2023 开发者 版权所有 热线：17701142185 <a href="http://beian.miit.gov.cn" target="_blank">粤ICP备2021091428号</a>
+        </div>
+
+        <script type="text/javascript">
+            document.body.onload = function(){
+                const $menu = document.getElementById('menu')
+                const children = Array.prototype.filter.call($menu.childNodes,el=>el instanceof HTMLLIElement)                
+                children.forEach(node=>{
+                    const span = node.querySelector('span')
+                    // console.log(node,span)
+                    if(span){
+                        span.addEventListener('click',()=>{
+                            node.className = !node.className ? 'yes' : ''
+                        })
+                    }
+                })
+                {
+                    const imgs = document.body.querySelectorAll('img')
+                    Array.prototype.forEach.call(imgs,img=>{
+                        // img.src = '/default/image/loading.gif'
+                        img.setAttribute('src',img.getAttribute('src2'))
+                        img.removeAttribute('src2')
+                    })
+                } // 图片延迟加载，使不影响上面菜单的设置
+            }
+       
+            function submit(){
+                let contact = document.getElementById('contact').value
+                let guestbook = document.getElementById('guestbook').value
+                contact = contact && contact.trim()
+                guestbook = guestbook && guestbook.trim()
+                if(!contact && !guestbook){
+                    alert('请输入反馈信息，谢谢。')
+                    return
+                }
+                axios.post('/feedback', {contact,guestbook}).then(function(){
+                    alert('提交成功，谢谢反馈！\n我们会根据你的反馈信息决定是否与你联系。')
+                    document.getElementById('contact').value = null
+                    document.getElementById('guestbook').value = null
+                })
+            }
+        </script> 
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	</body>
+</html>

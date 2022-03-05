@@ -1,0 +1,35 @@
+.el-table--mini td, .el-table--mini th {
+    padding: 3px 0;
+}
+
+.el-table__column-filter-trigger {
+    line-height: 25px;
+}
+.el-table .caret-wrapper {
+    height: 25px;
+}
+.el-table .sort-caret.ascending {
+    top: 1px;
+}
+.el-table .sort-caret.descending {
+    bottom: 2px;
+}
+
+.el-table,
+.el-table thead,
+.el-table__footer-wrapper tbody td, .el-table__header-wrapper tbody td{
+    color: #333;
+}
+
+/* el-input */
+.el-input--mini .el-input__inner {
+    height: 25px;
+    line-height: 25px;
+}
+.el-input--mini .el-input__icon {
+    line-height: 25px;
+}
+.el-input__inner{
+    border-radius: 2px;
+    background-color:unset !important;
+}

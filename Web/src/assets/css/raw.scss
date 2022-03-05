@@ -1,0 +1,1376 @@
+/*
+文件说明：
+一套 原生HTML控件的外观优化。
+为了区别于其它组件，我们的每个element都加上一个attribute：raw。如：
+<input raw />,<select raw>……</select>等等。
+*/
+:root{
+  // --border-color: #c5c5d5;
+  // --border-color: #d5d5f5;
+  // --thead-color: #f0e0f0;
+
+  --border-color: #a5a5c5;
+  --thead-color: #f0e0f0;
+  
+  --table-t-shadow: 1px 1px 0px 0px var(--border-color),-1px -1px 0px 0px var(--border-color);
+  --table-b-shadow: 0px -1px 0px 0px var(--border-color),0px 2px 0px 0px var(--border-color);
+  --table-l-shadow: 1px 0px 0px 0px var(--border-color),-1px 0px 0px 0px var(--border-color);
+  --table-r-shadow: 1px 0px 0px 0px var(--border-color),-1px 0px 0px 0px var(--border-color);
+}
+
+*{
+  box-sizing: border-box;
+}
+
+.optimize{
+  user-select:none;
+  -ms-user-select:none;
+  pointer-events: none;
+}
+.optimize2{
+  user-select:none !important;
+  -ms-user-select:none !important;
+}
+
+@keyframes appear
+{
+from {opacity: 0;}
+to {opacity: 1;}
+}
+
+.childs-none-events:not(tbody) > * > *{
+  pointer-events: none; 
+} // 辅助 v-sort，提升性能、效率：item targt里的元素 都禁止事件，这样拖拉的所有event的target就只有item元素。event.target就=item元素。IE11以下不支持pointer-events
+tbody.childs-none-events > tr > td > *{
+  pointer-events: none; 
+} // 辅助 v-sort
+
+.r-select,
+.r-datepicker,
+button[raw],
+select[raw],
+input[type=number][raw],
+input[type=password][raw],
+input:not([type])[raw],
+input[type=text][raw],
+input[type=search][raw],
+textarea[raw]{
+  padding: 0px 5px;
+  border:none;
+  outline:none;
+  border-radius: 2px;
+  border: 1px solid #bbb;  
+  // border-bottom: 1px groove #555;
+  box-sizing: border-box;
+  width: auto;
+  // max-width: calc(100% - 10px) !important;
+  vertical-align: middle;
+}
+textarea[raw]{
+  padding: 5px;
+}
+button[raw]:disabled,
+select[raw]:disabled,
+input[type=checkbox][raw]:disabled,
+input[type=number][raw]:disabled,
+input[type=password][raw]:disabled,
+input:not([type])[raw]:disabled,
+input[type=text][raw]:disabled,
+input[type=search][raw]:disabled,
+select[raw]:disabled{
+  background:#eee !important;
+  cursor: text;
+}
+button[raw]:disabled{
+  opacity: .5;
+}
+
+button[raw][readonly],
+select[raw][readonly],
+input[type=checkbox][raw][readonly],
+input[type=number][raw][readonly],
+input[type=password][raw][readonly],
+input:not([type])[raw][readonly],
+input[type=text][raw][readonly],
+input[type=search][raw][readonly],
+select[raw][readonly]{
+  // background:#eee !important;
+  // border-color: #eee !important;
+  border: none !important;
+}
+
+// select,
+// input{
+//   color: #555;
+// }
+
+/*input=text*/
+input[type=text][raw]:focus,
+input:not([type])[raw]:focus{
+  border: 1px dotted #aaf;
+}
+// input[type=text][raw].w2,
+// input:not([type])[raw].w2{
+//   width:
+// }
+
+/*input[type=number]*/
+input[type=number][raw]{
+  width:50px ;
+  text-align: center;
+}
+input[type=number][raw].mini {
+  max-width: 40px !important;
+}
+
+/*input[type=checkbox]。注意绑定：checked2。如:v-model="field" :checked2="field"*/
+input[type=checkbox][raw]{
+  position: relative;
+  top: -1px;
+  background: #00f;  
+  vertical-align: middle;
+}
+input[type=checkbox][raw]:disabled{
+  opacity: .5;
+}
+input[type=checkbox][raw]::before,
+input[type=checkbox][raw]::after{  
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: 0;
+  top:-1px;
+  left:-1px;
+  width:13px;
+  height: 13px;
+  border:1px solid #ddd;
+  border-radius: 2px;
+  background: #fff;
+}
+input[type=checkbox][raw]::before{
+  content:'√';
+  font-family: cursive;
+  text-align: center;
+  line-height: 100%;
+  border-color:#99f;
+  background: #99f;
+  color: #fff;
+}
+input[type=checkbox][raw]:not([disabled]):hover::before,
+input[type=checkbox][raw]:not([disabled]):hover::after{
+  border-color: #99f;
+  cursor: pointer;
+}
+input[type=checkbox][raw][checked2]::before{
+  z-index: 1;
+}
+// input[type=checkbox]{ pointer-events:none;}
+// input[type=checkbox]::after,input[type=checkbox]::before{pointer-events:auto;}
+
+/*select*/
+select[raw]{
+  padding: 0px 5px;  
+  // max-width: calc(100% - 4px) !important;
+  background-image: none !important;
+  filter: none !important;
+  appearance:none; 
+  // padding-right: 14px;
+  // background: url("https://raw.githubusercontent.com/ourjs/static/gh-pages/2015/arrow.png") no-repeat scroll right center transparent;
+    
+  option{
+    background: #fff;
+    color: #333;
+  }
+  option[disabled]{
+    color: #aaa;
+  }
+}
+select[raw]::-ms-expand { display: none; }
+
+select[raw],
+input[type=number][raw],
+input[type=password][raw],
+input:not([type])[raw],
+input[type=text][raw],
+input[type=search][raw]{
+  height: 25px;
+  line-height: 25px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+button[raw]{
+  cursor: pointer;
+  text-align: center;
+  padding: 3px 10px;
+  outline: none;
+  border: none;
+  border-radius: 2px;
+  border: 1px solid #654;
+  background: #edc;
+
+  max-width:none !important;
+  > i.fa{
+    margin-right: 3px;
+  }
+}
+button[raw]:not(.r-fresh):not([disabled]):hover{
+  background: #432;
+  color: #fff;
+  > i.fa{
+    color:inherit;
+  }
+}
+button[raw].no{
+  background: #fff;
+  color:#333;  
+  border: 1px solid #987;
+}
+button[raw].r-bright{
+  background: #409EFF;
+  color:#fff;    
+}
+button[raw].r-bright:not([disabled]):hover{
+  background: #77f;
+  color: #fff;
+}
+button[raw].r-bright:active,
+button[raw]:active{
+  background: #fff;
+  color: #666;
+}
+
+button[raw].small{
+  padding: 2px 8px;
+}
+
+button[raw].r-fresh{
+  padding: 2px 8px;
+  border: none;
+  background: none;
+  > i{
+    margin-right: 3px;
+  }
+}
+button[raw].r-fresh:not([disabled]):hover{
+  > i{
+    transform: scale(1.2,1.2)
+  }
+} // hover 变大i.fa
+button[raw].r-fresh.active{
+  border: 1px dotted #333;
+}
+
+// -->unagainButton
+button.unagainButton{
+  position: relative;
+  &.lock::before{
+    content: ' ';
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+  }
+  &.lock::after{
+    content: "\f110";
+    font: normal normal normal 14px/1 FontAwesome;
+    text-rendering: auto;
+    color: #000;
+    position: absolute !important;
+    top: calc(50% - 6px) !important;
+    left: calc(50% - 6px) !important;
+    animation: fa-spin 2s infinite linear;
+
+    border: none !important;
+    padding: 0 !important;
+    margin-top: 0 !important;
+    background:none !important;
+  }
+}
+// <--unagainButton
+
+// *{
+//   cursor: url('https://www.webhek.com/favicon.ico'), auto !important;
+// }
+
+// .r-fresh
+.r-datepicker.r-fresh,
+.r-select,
+select[raw].r-fresh,
+input[type=number][raw].r-fresh,
+input[type=password][raw].r-fresh,
+input:not([type])[raw].r-fresh,
+input[type=text][raw].r-fresh,
+input[type=search][raw].r-fresh,
+select[raw].r-fresh{
+  background: none;
+  border: none;
+  // border-bottom: 2px dotted #555;
+  border-bottom: 1px solid #666; // groove
+  border-radius: 0px;
+}
+
+// --->r-message 消息提示
+.r-message:not(.confirm){
+  display:inline-block;
+  opacity:0;
+  position:fixed;
+  z-index:1000000000000000;
+  top:0px;
+  left:0px;
+  padding:10px 20px 10px 10px;
+  background:#fef0f0;
+  border:1px solid #ddd;
+  border-radius:2px;
+  box-shadow: 0px 1px 10px 0px #432;
+  transition:opacity 300ms,top 200ms;
+  > i.fa:not(.close){
+    display: inline-block;
+    // padding: 5px;
+    font-size: 1.1em;
+    margin-right: 5px;
+    // vertical-align: top;
+    + span{
+      display: inline-block;
+    }
+  }
+  > i.fa.close{
+    position: absolute;
+    right: -1px;
+    top: -17px;
+    cursor: pointer;
+    padding: 2px 7px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-radius: 2px;
+    // box-shadow: 0px -5px 5px 0px #aaa;
+  }
+  &.error{
+    background: #fefefe;
+    > i.fa:not(.close){
+      color: #0c0;
+    }
+  }
+  &.success{
+    background: #fee;
+    > i.fa:not(.close){
+      color: #f33;
+    }
+  }
+  &.info{
+    // background: #efefff;
+    > i.fa:not(.close){
+      color: #00f;
+    }
+  }
+}
+.r-message.confirm{
+  display:inline-block;
+  opacity:0;
+  position:fixed;
+  z-index:100000;
+  top:0px;
+  left:0px;
+  
+  transition:opacity 300ms,top 200ms;
+  > div:nth-child(2){
+    position: relative;
+    z-index: 2;
+    padding:10px 20px 10px 10px;
+    background:#fef0f0;
+    border:1px solid #ddd;
+    border-radius:2px;
+    box-shadow:0px 2px 10px 1px #336;
+    > div.title{
+      > i.fa:not(.close){
+        font-size: 1.2em;
+        margin-right: 5px;
+        + span{
+          display: inline-block;
+        }
+      }
+    }
+    > div.value{
+      padding: 5px 0px;
+    }
+    > div.buttons{
+      padding-top: 10px;
+      text-align: right;
+      > button:first-child{
+        margin-right: 10px;
+      }
+    }
+  }
+  > div.shade{
+    position: fixed;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    background: #fff;
+    opacity: 0;
+    &:active + div{
+      animation: shake 100ms linear;
+    }
+  }
+}
+// <---r-message
+
+// --> r-select
+.r-select{
+  display: inline-block;
+  position: relative;
+  padding: 0px;
+  height: 100%;
+  > .input{
+    min-width: 40px;
+    min-height: 20px;
+    > label{
+      opacity: .5;
+    }
+  }
+  > input,> input[raw][readonly],
+  > .input,> .input[raw][readonly]{
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    padding-right: 11px;
+    cursor: default;
+    border: none;
+    outline:none;
+    background: none;
+    text-align: inherit;
+  }
+  > ul.dropdown{
+      position: fixed;
+      z-index: 100000;
+      display: none;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      box-shadow: 0px 3px 4px 0px #777;
+
+      max-height: calc(100% - 5px);
+      overflow: auto;
+      > li{
+        position: relative;
+        z-index: 0;
+      }
+      > li.header{
+        z-index: 10;
+        position: sticky;
+        top: 0px;
+        background:#fff;
+        border-bottom: 1px solid #cba;
+        &:empty{
+          display: none !important;
+        }
+      }
+  }
+  ul{
+    text-align: left;
+    li{
+      display: block !important;
+      float: none !important;
+      min-height: 25px !important;
+      height: auto !important;
+    }
+    li > div{
+        display: block;
+        padding: 0px 5px;
+        line-height: 25px;
+        cursor: pointer;  
+        // border-bottom: 1px solid #eee;
+        // position: relative;
+        // z-index: 0;
+    }
+    // li:nth-child(even) > div{
+    //     background: #f5f5fd; 
+    // }
+    li:not([disabled]):not([optgroup]):not(.header):not([selected]) > div:hover{
+        background: #654;
+        color: #fff;
+        & *,& *::placeholder{
+          color: #fff;
+        }
+    }
+    li[disabled] > div{
+        cursor: default;
+        color: #888;
+    }
+    li[optgroup] > div{
+      cursor: default;
+    }
+    li[selected] > div{
+        background: #432;
+        color: #fff;
+        & *,& *::placeholder{
+          color: #fff;
+        }
+        position: relative;
+    }
+    li[selected] > div::after{
+        content: "✓";
+        margin-left: 4px;
+        position: absolute;
+        right: 2px;
+        top: 0;
+    }
+    li li div{
+      padding-left: 1em;
+    }
+    li li li div{
+      padding-left: 2em;
+    }
+    li li li li div{
+      padding-left: 3em;
+    }
+    li li li li li div{
+      padding-left: 4em;
+    }
+  }
+  ul.dropdown.parentSelectable{
+    li[optgroup] > div{
+      cursor: pointer;
+    }
+  }
+  ul.dropdown.dropdownShowed{
+      display: block;
+  }
+  > i.clear{
+      display: none;
+      position: absolute;
+      right: 1px;
+      top: calc(50% - 8px);
+      // font-size: 1.1em;
+      cursor: pointer;
+  }
+  > i.dirIcon{
+    position: absolute;
+    top: calc(50% - 6px);
+    right: 1px;
+    pointer-events: none;
+  }
+  > input:hover + i.clear,
+  > .input:hover + i.clear,
+  > i.clear:hover{
+      display: block;
+      + .dirIcon{
+        display: none;
+      }
+  }
+
+  &.loading{
+    > span.loading{
+      // display: block;
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      top: 0px;
+      bottom: 0px;
+      // background:#999;
+      text-align: center;
+      > i.fa{
+        vertical-align: middle;
+      }
+    }
+  }
+}
+// <-- r-select
+
+// --> r-datePicker
+.r-datepicker{
+  display: inline-block;
+  height: 25px;  
+  min-width: 90px;   
+  border-bottom: 1px solid #ddd;
+  > *{
+    display: inline-block;
+  }
+  > input{
+      border:none;
+      outline:none;
+      align-self: center;
+      width: calc(100% - 18px);
+      height: 100%;
+      background:none;
+  }
+  > .fa{
+      min-width: 16px;
+      // display: block;
+      font-size: .7em;
+      text-align: left;
+      align-self: center;
+      opacity: .3;
+  }
+}
+
+.r-datePicker-panel{    
+  animation: appear 300ms;
+  background: #fff;
+  border: 1px solid #aaa;  
+  display: inline-block;
+  position: relative;    
+  > *{
+      display: inline-block;
+      vertical-align: top;
+      // border: 1px solid #000;
+  }
+  > .details{
+      padding: 10px;
+      width: 260px;
+      > ul.weeks{
+          li{
+              float: left;
+              width: 14.28%;
+              height: 25px;
+              line-height: 25px;
+              text-align: center;
+              color: #999;
+              // border: 1px solid #00f;
+          }
+          li[txt="日"],li[txt="六"]{
+              color: #d94;
+          }
+      }
+      > ul.dates,> ul.years,> ul.months{
+          li{
+              float: left;
+              width: 14.28%;
+              height: 25px;
+              line-height: 25px;
+              text-align: center;
+              color: #000;
+              cursor: pointer;
+          }
+          li[value_date],
+          li[value_month],
+          li[value_year],
+          li[current_date]{
+                  background: #66f;
+                  border-radius: 3px;
+                  font-size: 1.1em;
+                  color: #fff !important;
+          }
+          li[current_date]{
+              background: #aaa;
+              font-weight: bold;
+              color: #000 !important;
+          }
+      }
+      > ul.dates{
+          li{
+              color:#999
+          }
+          li[value-month]{
+              color: #000;
+          }
+          li:nth-child(7n-6)[value-month],li:nth-child(7n-7)[value-month]{
+              color: #f00;
+          }            
+      }
+      > ul.years{
+          li{
+              float: left;
+              width: 20%;
+              height: 40px;
+              line-height: 40px;
+              text-align: center;
+              color: #000;
+          }
+      }
+      > ul.months{
+          li{
+              float: left;
+              width: 25%;
+              height: 50px;
+              line-height: 50px;
+              text-align: center;
+              color: #000;
+          }
+      }
+      > ul.weeks::after,> ul.dates::after{
+          content: " ";
+          display: block;
+          clear: both;
+      }
+      > .ymd{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 5px 7px;
+          > .ym{
+              height: 25px;
+              width: 110px;
+              text-align: center;
+              line-height: 22px;
+              box-shadow: 0px 0px 1px 0px #ccc;
+              border: 1px solid #afafaf;
+              border-radius: 3px;
+              padding-right: 10px;
+              cursor: pointer;
+              position: relative;
+              color: #000;
+              label{
+                  cursor: pointer;
+              }
+          }
+          > .ym:hover{
+              background: #eee;
+          }
+          > .ym::after{
+              content: "\f107";
+              font: normal normal normal 14px/1 FontAwesome;
+              position: absolute;
+              right: 5px;
+              top: .4em;
+          }
+          > .left,> .right{
+              i.fa{
+                  width: 18px;
+                  height: 22px;
+                  line-height: 22px;
+                  text-align: center;
+                  cursor: pointer;
+                  // border: 1px solid #00f;
+              }
+              i.fa:hover{
+                  font-weight: bold;
+              }
+          }
+      }
+  }
+  > .details.hasOptions{
+      border-right: 1px solid #aaa;
+  }
+  > ul.options{
+      border-left: 1px solid #aaa;
+      position: relative;
+      left: -1px;
+      li{
+          cursor: pointer;
+          padding: 3px 8px;
+      }
+  }
+  > ul.options:empty{
+      display: none;
+  }
+}
+.r-datePicker-panel.fixed{
+  position: fixed;
+  z-index: 100000;
+  top: 50px;
+  left: 50px;
+  box-shadow: 0px 0px 4px 0px #999;
+}
+.r-datePicker-panel.hide{
+  display: none;
+}
+
+.r-datePicker-panel.top{
+  margin-top: 11px;
+}
+.r-datePicker-panel.bottom{
+  margin-bottom: 11px;
+}
+.r-datePicker-panel.top::after,.r-datePicker-panel.top::before,
+.r-datePicker-panel.bottom::after,.r-datePicker-panel.bottom::before{
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: 1;
+  top: -20px;
+  left: 10px;
+  width: 0px;
+  height: 0;
+  border: 10px solid;
+  border-color: transparent transparent #fff transparent;
+}
+.r-datePicker-panel.top::after,
+.r-datePicker-panel.bottom::after{
+  z-index: 0;
+  top: -22px;
+  left: 9px;
+  border: 11px solid;
+  border-color: transparent transparent #777 transparent;
+}
+
+.r-datePicker-panel.bottom::after,.r-datePicker-panel.bottom::before{
+  top: auto;
+  bottom: -20px;
+  border-color: #fff transparent transparent transparent;
+}
+.r-datePicker-panel.bottom::after{
+  top: auto;
+  bottom: -22px;
+  border-color: #777 transparent transparent transparent;
+}
+
+.r-datePicker-panel.left::after,.r-datePicker-panel.left::before{
+  right: auto;
+  left: 10px;
+}
+.r-datePicker-panel.left::after{
+  right: auto;
+  left: 9px;
+}
+
+.r-datePicker-panel.right::after,.r-datePicker-panel.right::before{
+  left: auto;
+  right: 10px;
+}
+.r-datePicker-panel.right::after{
+  left: auto;
+  right: 9px;
+}
+// <-- r-datePicker
+
+// -->输入框 错误提示 input 不支持:after,::before
+// button[raw],
+select[raw].r-error,
+input[type=number][raw].r-error,
+input[type=password][raw].r-error,
+input:not([type])[raw].r-error,
+input[type=text][raw].r-error,
+input[type=search][raw].r-error,
+textarea[raw].r-error{
+  border-bottom: 1px dashed #f00;
+      // border-bottom: 2px dashed #f00;
+}
+
+.r-select[error],
+.r-datepicker[error],
+select[raw][error],
+input[type=number][raw][error],
+input[type=password][raw][error],
+input:not([type])[raw][error],
+input[type=text][raw][error],
+input[type=search][raw][error],
+textarea[raw][error]{
+  border-bottom: 1px dashed #f00;
+      // border-bottom: 2px dashed #f00;
+}
+// .r-select[error],
+// .r-datepicker[error],
+// select[raw][error],
+// input[type=number][raw][error],
+// input[type=password][raw][error],
+// input:not([type])[raw][error],
+// input[type=text][raw][error],
+// input[type=search][raw][error],
+// textarea[raw][error]{
+//   // position: relative;
+//   &::after{
+//     content: '不允许空值';
+//     position: fixed;
+//     // margin-top: -25px;
+//     pointer-events: none;
+
+//     white-space: nowrap;
+//     padding: 5px 10px;
+//     background: #fbb;
+//     box-shadow: 0px 0px 2px 1px #999;
+//   }
+// }
+// // button[raw],
+// select[raw].r-error::after,
+// input[type=number][raw].r-error::after,
+// input[type=password][raw].r-error::after,
+// input:not([type])[raw].r-error::after,
+// input[type=text][raw].r-error::after,
+// input[type=search][raw].r-error::after,
+// textarea[raw].r-error::after{
+//   content: '45453535';
+//   display: block;
+//   position: fixed;
+//   z-index: 100;
+//   top: 30px;
+//   left: 30px;
+// }
+// <--输入框 错误提示
+
+// --> 自定义 title 美化
+[hint2]{
+  position: relative;  
+}
+[hint2].hover::after,
+[hint2]:hover::after,
+[hint3]:hover::before,
+[hint].hover::after,
+[hint]:hover::after{  
+  pointer-events: none;
+  display: inline-block;  
+  white-space:nowrap; 
+  padding: 2px 5px;
+  border: 1px solid #669;
+  border-radius: 2px;
+  z-index: 100;
+
+  font-size: 12px;
+  font-weight: 500 !important;
+  text-align: left !important;
+  line-height: 1.5em;
+  color: #444;
+  background: #fff;
+  box-shadow: 0px 1px 8px 0px #aaa;
+  text-shadow: none;
+}
+
+[hint].hover::after,
+[hint]:hover::after,
+[hint3]:hover::before {
+  content: attr(hint);
+  position: fixed;
+  margin-top: -30px;
+  // margin-left: -5px;
+}
+[hint].hover::after,
+[hint]:hover::after{
+  margin-left: -30px;
+}
+[hint3]:hover::before{
+  content: attr(hint3);
+}
+[hint][hintb].hover::after,
+[hint][hintb]:hover::after {
+  margin-top: 20px;
+}
+[hint][hintl]:hover::after {
+  margin-top: 20px;
+}
+[hint2].hover::after,
+[hint2]:hover::after {
+  content: attr(hint2);
+  position: absolute;  
+  // bottom: 80%;
+  // left: 60%;
+}
+[hint2][hint2l].hover::after,
+[hint2][hint2l]:hover::after{
+  left:auto;
+  right: 60%;
+  bottom: 100%;
+}
+[hint2][hint2l2].hover::after,
+[hint2][hint2l2]:hover::after{
+  left:auto;
+  right: 0;
+}
+[hint2][hint2t].hover::after,
+[hint2][hint2t]:hover::after{
+  top: -30px;
+  bottom: auto;
+  left:0px;
+  right:auto;
+}
+[hint2][hint2b].hover::after,
+[hint2][hint2b]:hover::after{
+  bottom: -30px;
+  top: auto;
+}
+[hintt50]:hover::after,[hintt50].hover::after{margin-top: -50px;}
+
+[hintl0]:hover::after,[hintl50].hover::after{margin-left: 0px;}
+[hintl50]:hover::after,[hintl50].hover::after{margin-left: -50px;}
+[hintl70]:hover::after,[hintl70].hover::after{margin-left: -70px;}
+[hintl90]:hover::after,[hintl90].hover::after{margin-left: -90px;}
+[hintl140]:hover::after,[hintl140].hover::after{margin-left: -140px;}
+
+[hint].h80:hover::after,[hint3].h80:hover::before{white-space:normal;width: 80px;}
+[hint].h100:hover::after,[hint3].h100:hover::before{white-space:normal;width: 100px;}
+[hint].h110:hover::after,[hint3].h110:hover::before{white-space:normal;width: 110px;}
+[hint].h120:hover::after,[hint3].h120:hover::before{white-space:normal;width: 120px;}
+[hint].h130:hover::after,[hint3].h130:hover::before{white-space:normal;width: 130px;}
+[hint].h140:hover::after,[hint3].h140:hover::before{white-space:normal;width: 140px;}
+[hint].h160:hover::after,[hint3].h160:hover::before{white-space:normal;width: 160px;}
+[hint].h180:hover::after,[hint3].h180:hover::before{white-space:normal;width: 180px;}
+[hint].h200:hover::after,[hint3].h200:hover::before{white-space:normal;width: 200px;}
+[hint].h220:hover::after,[hint3].h220:hover::before{white-space:normal;width: 220px;}
+[hint].h240:hover::after,[hint3].h240:hover::before{white-space:normal;width: 240px;}
+[hint].h260:hover::after,[hint3].h260:hover::before{white-space:normal;width: 260px;}
+[hint].h280:hover::after,[hint3].h280:hover::before{white-space:normal;width: 280px;}
+[hint].h300:hover::after,[hint3].h300:hover::before{white-space:normal;width: 300px;}
+[hint].h320:hover::after,[hint3].h320:hover::before{white-space:normal;width: 320px;}
+[hint].h340:hover::after,[hint3].h340:hover::before{white-space:normal;width: 340px;}
+[hint].h360:hover::after,[hint3].h360:hover::before{white-space:normal;width: 360px;}
+[hint].h380:hover::after,[hint3].h380:hover::before{white-space:normal;width: 380px;}
+[hint].h400:hover::after,[hint3].h400:hover::before{white-space:normal;width: 400px;}
+[hint].h420:hover::after,[hint3].h420:hover::before{white-space:normal;width: 420px;}
+// <--
+
+// drag sort -->
+.cloneMove{
+  pointer-events: none;
+  opacity: .9;
+  position: fixed !important; // fixed与float不能一起用，会有问题
+  z-index: 10000;
+  box-shadow: 0px 0px 3px 0px #c5c5c5 !important;
+  // background-color: #ddd;
+}
+.noSelectText{
+  user-select:none;
+  -ms-user-select:none;
+}
+.dragLeft,.dragRight,.dragTop,.dragBottom{
+  position: relative;
+}
+.dragLeft::after,
+.dragRight::after,
+.dragTop::after,
+.dragBottom::after{
+    content: ' ';
+    position: absolute;    
+}
+.dragLeft::after,
+.dragRight::after{
+  top: 0px;
+  height: 100%;
+  border-left: 1px dotted #00f;
+}
+.dragLeft::after{
+  left: 0px;
+}
+.dragRight::after{
+  right: 0px;
+}
+.dragTop::after,
+.dragBottom::after{
+  left: 0px;
+  width: 100%;
+  border-top: 1px dotted #00f;
+}
+.dragTop::after{
+  top: 0px;
+}
+.dragBottom::after{
+  bottom: 0px;
+}
+// <-- drag sort 
+
+// --> v-resize
+.resize-stick{
+  display: block;
+  position:absolute;
+  // z-index: 111;
+  background-color: #000;
+  opacity: 0;
+}
+.resize-stick{
+  height: 3px;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  right: auto;
+  bottom: auto;
+  cursor:n-resize;
+}
+.resize-stick2{
+  height: 100%;
+  width: 3px;
+  top: 0px;
+  left: auto;
+  right: 0px;
+  bottom: auto;
+  cursor:e-resize;
+}
+.resize-stick3{
+  height: 3px;
+  width: 100%;
+  top: auto;
+  left: 0px;
+  right: auto;
+  bottom: 0px;
+  cursor:n-resize;
+}
+.resize-stick4{
+  height: 100%;
+  width: 3px;
+  top: 0px;
+  left: 0px;
+  right: auto;
+  bottom: auto;
+  cursor:e-resize;
+}
+
+.resize-angle-stick{
+  display: block;
+  position:absolute;
+  z-index: 112;  
+  height: 6px;
+  width: 6px;
+  // background: #f00;
+  opacity: 0;
+
+  top: 0px;
+  left: 0px;
+  cursor:se-resize;
+
+  // border-bottom: 10px solid #989998;
+  // border-left: 10px solid transparent;
+}
+.resize-angle-stick2{
+  top: 0px;
+  left: auto;
+  right: 0px;
+  bottom: auto;
+  cursor:ne-resize;
+
+  // border-bottom: 10px solid #989998;
+  // border-left: 10px solid transparent;
+}
+.resize-angle-stick3{
+  top: auto;
+  left: auto;
+  right: 0px;
+  bottom: 0px;
+  cursor:se-resize;
+
+  opacity: 1;
+  right: 1px;
+  bottom: 1px;
+  border-bottom: 10px solid #666;
+  border-left: 10px solid transparent;
+}
+.resize-angle-stick4{
+  top: auto;
+  left: 0px;
+  right: auto; // unset不兼容IE
+  bottom: 0px;
+  cursor:ne-resize;
+
+  // border-bottom: 100px solid #989998;
+  // border-right: 100px solid transparent;
+}
+// <-- v-resize
+
+// -->vtable2
+.vtable2{
+  height: 100%;    
+  width: 100%;    
+  overflow: hidden;
+  position: relative; // v-onresize需要
+  background: #fff;
+  > table{
+      // // // // border-collapse:collapse;  // IE没有box-shadow
+      border-spacing: 0px;
+      table-layout: fixed;
+      max-width: 100%;
+      width:100%;
+      height: 100%;
+      th,td{                
+          height: 30px;
+          max-height: 30px;
+          min-height: 30px;
+          // line-height: 30px;
+          padding: 0px 3px;
+          border: none;
+          // background: #fff;
+
+          text-overflow: ellipsis;
+          white-space: nowrap;   
+          overflow: hidden;
+      }  
+      > thead th{
+        position: relative;
+        font-weight: 500;
+        background:#432;
+        color: #fff;
+        > div.label{
+          color: #fff;
+          > i.fa{
+            color: inherit;
+            &.disabled{
+              color: #987;
+            }
+          }
+          > input.nameEditer{
+            color: inherit;
+          }
+        }
+        > i.kvIcon{
+          pointer-events: none;
+          // position: fixed;
+          position: absolute;
+          top: 1px;
+          left: 3px;
+          transform: rotate(90deg);
+
+          color: #999;
+          font-size: .7em;
+        } // 绑定了“别针”
+      }
+      // > tfoot{
+      //   // background: #efefef;
+      // }
+      tbody{
+        tr{
+          display: none;
+          &.setting{
+            display: table-row;
+          }
+          &:nth-child(even){
+            td{
+                // background: #f5f5f5;
+                background: #ffedea;                    
+            }
+          }
+          &:not(.fillGapTr):hover td{
+            // background: #e3e3e3;
+            background: #fc9; 
+          }
+          &.show{
+            display: table-row;
+          }
+          &.empty{
+            display: table-row;
+            td{
+              background: #fff;
+              color: #888;
+              min-height: auto;
+              max-height: auto;
+              height: auto;              
+            }
+          }
+          &.fillGapTr{
+            td{
+              height: 100%;
+              max-height: none;
+              background:#fff;
+            }
+            &.empty{
+              td{
+                height: calc(35px * 5);
+              }
+            } // 空列表时，让提示显示出来
+          } // 补充空白的行
+        }
+        i.create,i.edit,i.delete,i.del,i.complete,i.cancel,i.more,
+        i.secret,i.copy,i.sqlIcon,.show,.enable,i.starIcon{
+            font-size: 1.3em;
+            vertical-align: middle;
+            padding: 0px 6px;
+            cursor: pointer;
+        }           
+      }
+      &.empty::after{
+        content: "没有数据";
+        position: absolute;
+        top: 40px;
+        left: calc(50% - 50px);
+        color: #ccc;
+        font-family: 微软雅黑,幼圆;
+        font-size: 25px;
+        letter-spacing: .1em;
+      }
+  }
+  &.loading{
+    > table{
+      &.empty::after{
+        content: "加载中……";
+      }
+    }
+  }
+
+  > i.fa.loadErrorIcon{
+    display: none;
+  }
+  &.loadError{
+    > i.fa.loadErrorIcon{
+      display: block;
+      z-index: 20;
+      position: absolute;
+      top: calc(50% - 20px);
+      left: calc(50% - 20px);
+      font-size: 4em;
+      color: #f30;
+      text-shadow: 0 0 5px #f30;
+      &::before{
+        opacity: .7;
+      }
+    }
+  }
+} // 基本设置
+.vtable2{
+  > table{
+      th[fixed=l],td[fixed=l]{
+        border-right: 1px solid #bbb;
+      }
+      th[fixed=r],td[fixed=r]{
+        border-left: 1px solid #bbb;
+      }      
+      thead{
+        tr{
+          th:not([fixed]){
+            border-right: 1px solid #987;
+          }
+        }
+      }
+      tfoot{
+        background: #edc;
+        tr{
+          td{
+            // border-top: 1px solid #987;
+            font-size: 1.1em;
+            > span{
+              font-size: inherit;
+            }
+          }
+          td:not([fixed]){
+            border-right: 1px solid #ba9;
+          }
+          td:last-child{
+            border-right: none;
+          }
+        }
+      }
+      tbody,thead,tfoot{
+        tr{
+          th:not([fixed]) + th[fixed],td:not([fixed]) + td[fixed]{
+            border-left: none;
+            box-shadow: -1px 0 0 0px #aaa;
+          }
+        }
+      }
+  }
+} // 滚动时 固定单元格的设置；线条的设置
+.vtable2{
+  > .h,> .v{
+    display: none;
+    cursor: default;
+    position: absolute;
+    z-index: 1;
+    // left: 0px;
+    // bottom: 0px;
+    height: 12px;
+    width: 12px;
+    background: #852;
+    // border: 1px solid #000;
+    opacity: .4;
+    &:hover,
+    &.run{
+      // background:#630;
+      opacity: .6;
+    }
+  }
+  > .v{
+    transform: translateY(30px); // V滚动条在thead下的tbody
+    right: 1px;
+    top: 0px;
+    width: 12px;
+  }
+  > .h{
+    left: 0px;
+    bottom: 1px;
+  }
+  > .v.show,> .h.show{
+    display: block;
+  }
+}// 滚动条 的设置
+// <--vtable2
+
+// fixedScroll.js
+.fixedScroll{
+  position: relative;
+}

@@ -1,0 +1,8 @@
+.popup.reportPopup{
+    // width: 100%;
+    // width: 90%;
+    &[linkReport]{
+        opacity: .3;
+        transition: opacity 300ms;
+    }
+}

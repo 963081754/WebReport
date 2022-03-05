@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="Keywords" content="报表,通用报表,做报表,报表系统,web报表"/>
+    <meta name="Description" content="通用web报表系统,适合ERP/EMS/进销存/CRM等数据系统的报表设计显示,可提供给员工/客户/供应商等用户使用,设计灵活易用,功能强大,大数据加载无压力,完美解决ERP/EMS/CRM/进销存的报表复杂/多/难问题,一套搞定所有报表！联系电话：17701142185" />
+    <meta NAME="author" CONTENT="电话:17701142185 微信:ls892465856">
+    <meta NAME="copyright" content="Copyright 2021-2023 开发者 版权所有 热线:17701142185 微信:ls892465856 粤ICP备2021091428号">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <style type="text/css">
+      body > .__desc,
+      body > .__courses{
+        display: none !important;
+      } 
+    </style>
+  </head>
+  <body>
+    <!-- 这些静态文字是用来做SEO的 -->
+    <ul class="__desc">
+      <li>浏览器支持：谷歌，360，火狐，opera，qq，搜狗，edge，IE(>=11，不推荐)等各大浏览器。</li>
+      <li>数据库支持：MSSql（>=2005），MySql（正式版），Oracle（正式版）；可同时链接多个数据库。</li>
+      <li>高效查询，支持1000万级数据分页（需 遵循数据库与SQL优化策略）</li>
+      <li>权限支持：多前台类型（如：员工、客户、供应商等）、多角色、登录用户约束。</li>
+      <li>登录接口支持：无需另建用户、角色，通过接口 使用已有的用户、角色数据；便于系统对接。</li>
+      <li>不对链接的数据库做任何修改，只读模式，无需担心影响数据；建议只给数据库链接账号 只读权限。</li>  
+      <li>可链接自己的远程数据库(MSSQL)，创建新报表，或修改当前已有的报表。</li>  
+      <li class="introduce">
+        系统详细介绍：<a href="http://www.zuobaobiao.cn/" target="_blank">www.zuobaobiao.cn</a>
+        系统运行示列：<a href="http://www.zuobaobiao.cn/admin" target="_blank">www.zuobaobiao.cn/admin</a>
+      </li>  
+      <li class="contact">Copyright 2021-2023 开发者 版权所有 电话：17701142185 微信：ls892465856  <a href="http://beian.miit.gov.cn" target="_blank">粤ICP备2021091428号</a></li>
+    </ul>
+    <ul class="__courses">
+      <li>一个完整的报表设计示例：采购明细</li>
+      <li>配置：自定义 前台类型（如：员工、客户等）</li>
+      <li>配置：基于已有角色、用户的轻松对接</li>
+      <li>配置：多数据库链接</li>  
+      <li>配置：后台模拟【登录用户】</li>
+      <li>报表复用：一句SQL，多报表共享</li>  
+      <li>报表链接：打开子报表（如：弹出 明细）</li>
+      <li>URL 链接：传参打开外部URL</li>  
+      <li>报表权限：角色分配</li>
+      <li>报表权限：登录用户约束 方式一（如：我的采购单）</li>
+      <li>报表权限：登录用户约束 方式二（如：我的采购单）</li>
+      <li>表格设计：重命名、排序、拖拽、列宽、对齐、格式化、【别针】绑定、两边固定、显示隐藏、合计等</li> 
+      <li>表格设计：用【别针】绑定 列和条件，优化SQL JOIN</li> 
+      <li>表格设计：JS自定义复杂计算列</li>
+      <li>表格设计：状态列的颜色标记</li>
+      <li>查询设计：查询栏设计</li>
+      <li>查询设计：条件的默认值、必填</li>
+      <li>查询设计：绑定级联下拉条件</li>
+      <li>查询设计：创建组合条件一</li>
+      <li>查询设计：创建组合条件二</li>
+      <li>查询设计：高级查询，复杂灵活</li>
+      <li>其它：打印、下载</li>
+      <li>其它：单报表浏览器窗口，方便系统嵌套</li>  
+      <li>其它：精简全屏，页面更宽敞</li>
+      <li>其它：多报表浏览，一点都不卡</li>
+    </ul>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>

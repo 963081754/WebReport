@@ -1,0 +1,59 @@
+.chainCreator{
+    > table{
+        tr{
+            td{
+                margin-top: 10px;
+                &:first-child{
+                    padding: 5px 0px 0px 0px;
+                    text-align: right;
+                    vertical-align: top;
+                }
+            }
+            &.masterKeys{
+                > td:nth-child(2){
+                    > span{
+                        &:not(:nth-child(1)){
+                            margin-left: 10px;
+                        }
+                        > select{
+                            min-width: 50px;
+                        }
+                    }
+                }
+            }
+            &.fielter{
+                > td.disabled{
+                    text-decoration: line-through;
+                    color: #999;
+                }
+            }
+        }
+    }
+    > div.row{
+        display: flex;
+        padding: 5px;
+        > label{
+            width: 100px;
+            padding: 0px 5px;
+            text-align: right;
+        }
+        > div{
+            flex-grow: 1;
+        }
+        > div.radiogroup{
+            > label{
+                margin-right: 10px;
+                &:last-child{
+                    margin-right: 0px;
+                }
+                > input[type=radio]{
+                    margin-right: 5px;
+                }
+            }
+        }
+        textarea.values{
+            width: 400px;
+            height: 200px;
+        }
+    }
+}
