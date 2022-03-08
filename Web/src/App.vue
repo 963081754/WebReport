@@ -13,7 +13,7 @@
         <li class="introduce">
           demo：<a href="http://www.zuobaobiao.cn/admin" target="_blank">www.zuobaobiao.cn/admin</a>
           文档：<a href="http://www.zuobaobiao.cn/" target="_blank">www.zuobaobiao.cn</a>          
-          源码：<a href="https://github.com/963081754/WebReport" target="_blank">https://github.com/963081754/WebReport</a>
+          源码：<a href="https://github.com/963081754/WebReport" target="_blank">github</a>
         </li>  
         <!-- <li class="contact">联系方式：微信（ls892465856），电话（17701142185）</li>       -->
         <li class="contact">Copyright 2021-2023 开发者 版权所有 电话：17701142185 微信：ls892465856  <a href="http://beian.miit.gov.cn" target="_blank">粤ICP备2021091428号</a></li>
