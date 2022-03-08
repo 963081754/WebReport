@@ -9,7 +9,7 @@
         <li>权限支持：多前台类型（如：员工、客户、供应商等）、多角色、登录用户约束。</li>
         <li>登录接口支持：无需另建用户、角色，通过接口 使用已有的用户、角色数据；便于系统对接。</li>
         <li>不对链接的数据库做任何修改，只读模式，无需担心影响数据；建议只给数据库链接账号 只读权限。</li>  
-        <li>可链接自己的远程数据库(MSSQL)，创建新报表，或修改当前已有的报表。</li>  
+        <li>可链接自己的远程数据库(MSSQL)，创建新报表，或修改当前已有的报表。</li>
         <li class="introduce">
           demo：<a href="http://www.zuobaobiao.cn/admin" target="_blank">www.zuobaobiao.cn/admin</a>
           文档：<a href="http://www.zuobaobiao.cn/" target="_blank">www.zuobaobiao.cn</a>          
